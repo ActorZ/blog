@@ -2,6 +2,7 @@
 
 require('./bootstrap');
 
+
 import Vue from 'vue';
 //window.Vue = Vue;
 window.Vue = require('vue');
@@ -21,3 +22,5 @@ $(document).ready(function(){
    		$(this).toggleClass('is-open');
    });
 });
+
+require('./manage');

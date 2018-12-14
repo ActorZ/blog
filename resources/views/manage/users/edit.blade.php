@@ -49,7 +49,7 @@
           <label for="roles" class="label">Roles:</label>
           <input type="hidden" name="roles" :value="rolesSelected" />
 
-            @foreach ($user->roles as $role)
+            @foreach ($roles as $role)
               <div class="field">
                 <b-checkbox v-model="rolesSelected" :native-value="{{$role->id}}">{{$role->display_name}}</b-checkbox>
               </div>

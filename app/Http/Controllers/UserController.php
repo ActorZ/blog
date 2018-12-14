@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use App\Http\Requests\StoreNewUser;
 use App\Http\Requests\EditUserRequest;
 use DB;
@@ -73,7 +74,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('id',$id)->with('roles')->first();
         return view('manage.users.show')->with('user',$user);
     }
 
@@ -85,8 +86,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('manage.users.edit')->with('user',$user);
+        $user = User::where('id',$id)->with('roles')->first();
+        $roles = Role::all();
+        return view('manage.users.edit')->with('user',$user)->with('roles',$roles);
     }
 
     /**
@@ -122,12 +124,12 @@ class UserController extends Controller
             $user->password = Hash::make(trim($request->password));
         }
 
-        if($user->save()) {
-            return redirect()->route('users.show',$id);
-        }else{
-            Session::flash('error','Error, user is not updated');
-            return redirect()->route('users.edit',$id);
-        }
+        $user->save();
+
+        $user->syncRoles(explode(',', $request->roles));
+        Session::flash('success','User updated');
+        return redirect()->route('users.show',$id);
+
 
     }
 

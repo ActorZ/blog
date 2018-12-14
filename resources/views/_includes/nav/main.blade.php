@@ -18,7 +18,7 @@
                 <a class="navbar-item is-tab is-hidden-tablet m-l-20" href="#">Learn</a>
                  <a class="navbar-item is-tab is-hidden-tablet" href="#">Discuss</a>
                  <a class="navbar-item is-tab is-hidden-tablet" href="#">Share</a> 
-                  @if(Auth::guest())
+                  @guest
                     <a href="{{route('login')}}" class="navbar-item is-tab">Login</a>
                     <a href="{{route('register')}}" class="navbar-item is-tab">Join the community</a>
                   @else
@@ -39,7 +39,7 @@
                             
                         </ul>
                     </button>
-                  @endif
+                  @endguest
               </div> 
            </div>  
         </nav>
